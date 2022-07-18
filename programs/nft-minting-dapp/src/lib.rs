@@ -3,7 +3,7 @@ use anchor_spl::{associated_token, token};
 use mpl_token_metadata::{ID as TOKEN_METADATA_ID, instruction as token_instruction};
 
 
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+declare_id!("2ffVV9CD17CoJvFW2J9QVRMZQnRterYhLLZVioiMWzYS");
 
 #[program]
 pub mod nft_minting_dapp {

@@ -1,13 +1,13 @@
 [features]
 seeds = false
-[programs.localnet]
-nft_minting_dapp = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+[programs.devnet]
+nft_minting_dapp = "2ffVV9CD17CoJvFW2J9QVRMZQnRterYhLLZVioiMWzYS"
 
 [registry]
 url = "https://anchor.projectserum.com"
 
 [provider]
-cluster = "localnet"
+cluster = "devnet"
 wallet = "/home/berzan/.config/solana/id.json"
 
 [scripts]
