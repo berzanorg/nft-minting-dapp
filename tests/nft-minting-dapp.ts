@@ -8,9 +8,9 @@ describe("nft-minting-dapp", () => {
 
   const program = anchor.workspace.NftMintingDapp as Program<NftMintingDapp>;
 
-  it("Is initialized!", async () => {
+  it("Can call mint method!", async () => {
     // Add your test here.
-    const tx = await program.methods.initialize().rpc();
+    const tx = await program.methods.mint().rpc();
     console.log("Your transaction signature", tx);
   });
 });
