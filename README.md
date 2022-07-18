@@ -22,3 +22,7 @@ Deploying the program
 ```
 anchor deploy
 ```
+
+<br/>
+
+Built with ❤️ by Berzan
