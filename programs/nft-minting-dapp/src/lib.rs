@@ -9,9 +9,14 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod nft_minting_dapp {
     use super::*;
 
-    pub fn mint(ctx: Context<Mint>, metadata_title: String, metadata_symbol: String, metadata_uri: String, ) -> Result<()> {
+    pub fn mint(ctx: Context<Mint>,
+        metadata_title: String,
+        metadata_symbol: String,
+        metadata_uri: String,
+    ) -> Result<()> {
+        
         msg!("Creating a mint account...");
-        msg!("Mint: {}", &ctx.accounts.mint.key);
+        msg!("Mint: {}", &ctx.accounts.mint.key());
 
         system_program::create_account(
             CpiContext::new(
@@ -23,35 +28,35 @@ pub mod nft_minting_dapp {
             ),
             10_000_000,
             82,
-            &ctx.accounts.token_program.key,
+            &ctx.accounts.token_program.key(),
         )?;
 
 
         msg!("Initializing the mint account...");
-        msg!("Mint: {}", &ctx.accounts.mint.key);
+        msg!("Mint: {}", &ctx.accounts.mint.key());
         token::initialize_mint(
             CpiContext::new(
                 ctx.accounts.token_program.to_account_info(),
                 token::InitializeMint {
-                    mint: ctx.accounts.token_program.to_account_info(),
+                    mint: ctx.accounts.mint.to_account_info(),
                     rent: ctx.accounts.rent.to_account_info(),
                 }
             ),
             0,
-            &ctx.accounts.mint_authority.key,
-            Some(&ctx.accounts.mint_authority.key),
+            &ctx.accounts.mint_authority.key(),
+            Some(&ctx.accounts.mint_authority.key()),
         )?;
 
 
         msg!("Creating a token account...");
-        msg!("Token Address: {}", &ctx.accounts.token_account.key);
+        msg!("Token Address: {}", &ctx.accounts.token_account.key());
 
         associated_token::create(
             CpiContext::new(
                 ctx.accounts.associated_token_program.to_account_info(),
                 associated_token::Create {
                     payer: ctx.accounts.mint_authority.to_account_info(),
-                    associated_token: ctx.accounts.associated_token_program.to_account_info(),
+                    associated_token: ctx.accounts.token_account.to_account_info(),
                     authority: ctx.accounts.mint_authority.to_account_info(),
                     mint: ctx.accounts.mint.to_account_info(),
                     system_program: ctx.accounts.system_program.to_account_info(),
@@ -63,8 +68,8 @@ pub mod nft_minting_dapp {
 
 
         msg!("Minting token to the token account...");
-        msg!("Mint: {}", &ctx.accounts.mint.to_account_info().key);
-        msg!("Token Address: {}", &ctx.accounts.token_account.key);
+        msg!("Mint: {}", &ctx.accounts.mint.to_account_info().key());
+        msg!("Token Address: {}", &ctx.accounts.token_account.key());
 
         token::mint_to(
             CpiContext::new(
@@ -79,7 +84,7 @@ pub mod nft_minting_dapp {
         )?;
 
         msg!("Creating a metadata account...");
-        msg!("Metadata Account Address: {}", &ctx.accounts.metadata.to_account_info().key);
+        msg!("Metadata Account Address: {}", &ctx.accounts.metadata.to_account_info().key());
         invoke(
             &token_instruction::create_metadata_accounts_v2(
                 TOKEN_METADATA_ID,
